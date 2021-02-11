@@ -1,0 +1,36 @@
+Gameboy's Super Mario Land Reverse Engineering.
+
+$ file sml.gb
+sml.gb: Game Boy ROM image: "SUPER MARIOLAND" (Rev.01) [MBC1], ROM: 512Kbit
+
+by 0xbiel.
+
+----
+
+2021.02.10
+
+First day of project. Dowloaded the ROM and tested it on SameBoy Emulator, it
+works fine.
+
+2021.02.11
+
+- 1st Goal: Make Mario run by himself, without the user pressing the -> button.
+
+- When the game is running, we are at the address [0x000297]
+
+- The general gameboy memory map:
+  + [0000] - [3FFF]: 16KB ROM bank 00. Usually  a fixed bank.
+  + [4000] - [7FFF]: 16KB ROM Bank 01~NN. Switchable via Memory Bank Controllers.
+  + [8000] - [9FFF]: 8KB VRAM.
+  + [A000] - [BFFF]: 8KB External RAM.
+  + [C000] - [CFFF]: 4KB WRAM. Bank 0.
+  + [D000] - [DFFF]: 4KB WRAM. Bank 1~N.
+  + [E000] - [FDFF]: Mirror of ECHORAM. Nintendo forbids the use of this area lol.
+  + [FE00] - [FE9F]: Sprite attribute table (Object Attribute Memory).
+  + [FEA0] - [FEFF]: Nintendo also forbids the use of this area and this one is
+                     unused indeed.
+  + [FF00] - [FF7F]: I/O Registers.*
+  + [FF80] - [FFFE]: HRAM.
+  + [FFFF] - [FFFF]: Interrupts Enable Register.
+
+* That's the address range we want to explore on this first goal.
